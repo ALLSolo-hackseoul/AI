@@ -3,8 +3,7 @@ import torchvision
 import torch.utils
 import torch.utils.data
 from model.autoencoder import AutoEncoder
-from transformers import get_scheduler
-from transformers import ViTImageProcessor, ViTForImageClassification
+
 
 def main():
     model = AutoEncoder()
@@ -12,8 +11,8 @@ def main():
 
     resize = torchvision.transforms.Resize([128, 128])
 
-    data1 = torchvision.io.read_image("src.png").to(torch.float)
-    data1_clone = torchvision.io.read_image("target.png").to(torch.float)
+    data1 = torchvision.io.read_image("src.jpg").to(torch.float)
+    data1_clone = torchvision.io.read_image("tgt.jpg").to(torch.float)
 
     data1 = resize(data1)
     data1_clone = resize(data1_clone)
@@ -31,7 +30,7 @@ def main():
 
     similarity = torch.nn.functional.cosine_similarity(output1,output1_clone, dim=0)
 
-    print("similarity :" ,similarity.item())
+    print("cosine value :" ,similarity.item())
 
 if __name__ == "__main__":
     main()
